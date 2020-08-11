@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements'
 
 import Home from '../Home';
-import ListsMenu from '../ListsMenu';
+import Menu from '../Menu';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +35,7 @@ const TabsNavigation = (props) => {
       />
       <Tab.Screen
         name="Lists"
-        component={ListsMenu}
+        component={Menu}
         options={{
           tabBarIcon: ({color, size}) => (
               <Icon
