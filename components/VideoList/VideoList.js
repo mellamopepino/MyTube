@@ -10,13 +10,11 @@ import {
 import VideoPlayer from './VideoPlayer';
 
 const VideoList = (props) => {
-  const { videos, onEndReached } = props
+  const { videos, onEndReached, onRefresh, refreshing } = props
 
   const renderVideo = (video) => {
-    // TODO: agregar date.
-    console.log('data', video.publishedDate, new Date(video.publishedDate).toString())
     return (
-      <View key={video.id} style={styles.videoContainer}>
+      <View style={styles.videoContainer}>
         <VideoPlayer
           video={video.videoFiles.mp4}
         />
@@ -32,9 +30,11 @@ const VideoList = (props) => {
     <FlatList
       data={videos}
       renderItem={({item}) => renderVideo(item)}
-      keyExtractor={item => item.id}
+      keyExtractor={(item, index) => index}
       horizontal={false}
       onEndReached={onEndReached}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
     />
   )
 }

@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
-  Text,
 } from 'react-native';
 
 import VideoList from '../VideoList';
@@ -9,17 +8,22 @@ import VideoList from '../VideoList';
 import HomeContext from '../../context/HomeContext'
 
 const Home = () => {
-  const { videos } = useContext(HomeContext)
+  const [ refreshing, setRefreshing ] = useState(false)
+  const { videos, fetchNextPage, refreshData } = useContext(HomeContext)
 
-  const getVideos = () => {
-    console.log('get more!')
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    await refreshData()
+    setRefreshing(false)
   }
 
   return (
     <View>
       <VideoList
         videos={videos}
-        onEndReached={getVideos}
+        onEndReached={fetchNextPage}
+        onRefresh={handleRefresh}
+        refreshing={refreshing}
       />
     </View>
   )

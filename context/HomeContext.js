@@ -1,29 +1,53 @@
 import React, { useState, useEffect, createContext } from "react";
-
-import {
-  homeSuccessWithMore,
-} from '../mocks';
-
+import axios from 'axios';
 
 const HomeContext = createContext();
 
 export const HomeProvider = (props) => {
-    const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
+  const [offset, setOffset] = useState(0);
 
-    useEffect(() => {
-      setData(homeSuccessWithMore)
-    }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=${offset}&limit=3`)
 
-    return (
-        <HomeContext.Provider
-          value={{
-            videos: data.items,
-            lists: data.listasPrincipales,
-          }}
-        >
-          {props.children}
-        </HomeContext.Provider>
-      );
+      !data ?
+        setData(res.data) :
+        setData((data) => {
+          return {
+            ...data,
+            items: [...data.items, ...res.data.items]
+          }
+        })
+    }
+
+    fetchData()
+  }, [offset])
+
+  const fetchNextPage = async () => {
+    if(data.moreItems) {
+      setOffset(offset+1)
+    }
+  }
+
+  const refreshData = async () => {
+    const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=0&limit=3`)
+
+    setData(res.data)
+  }
+
+  return (
+    <HomeContext.Provider
+      value={{
+        videos: data?.items,
+        lists: data?.listasPrincipales,
+        fetchNextPage,
+        refreshData,
+      }}
+    >
+      {props.children}
+    </HomeContext.Provider>
+  );
 }
 
 export default HomeContext;
