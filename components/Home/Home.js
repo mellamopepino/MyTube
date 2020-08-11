@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,10 @@ import {
 
 import VideoList from '../VideoList';
 
-const Home = (props) => {
-  const { videos } = props
+import HomeContext from '../../context/HomeContext'
+
+const Home = () => {
+  const { videos } = useContext(HomeContext)
 
   const getVideos = () => {
     console.log('get more!')
@@ -15,7 +17,6 @@ const Home = (props) => {
 
   return (
     <View>
-      <Text>videos</Text>
       <VideoList
         videos={videos}
         onEndReached={getVideos}

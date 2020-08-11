@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -6,13 +6,13 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import HomeContext from '../../context/HomeContext'
 
 const Home = (props) => {
-  const { lists } = props
+  const { lists } = useContext(HomeContext)
 
   return (
     <View>
-      <Text>Lists</Text>
       <ScrollView>
         {lists.map((list) => {
           return (

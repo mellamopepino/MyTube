@@ -8,15 +8,10 @@ import { Icon } from 'react-native-elements'
 import Home from '../Home';
 import ListsMenu from '../ListsMenu';
 
-import {
-  homeSuccessWithMore,
-} from '../../mocks';
-
 const Tab = createBottomTabNavigator();
 
-const TabsNavigation = () => {
+const TabsNavigation = (props) => {
   return (
-
     <Tab.Navigator
       initialRouteName={"Home"}
       tabBarOptions={{
@@ -25,9 +20,7 @@ const TabsNavigation = () => {
     >
       <Tab.Screen
         name="Home"
-        component={() => {
-          return <Home videos={homeSuccessWithMore.items}/>
-        }}
+        component={Home}
         options={{
           tabBarIcon: ({color, size}) => (
               <Icon
@@ -42,9 +35,7 @@ const TabsNavigation = () => {
       />
       <Tab.Screen
         name="Lists"
-        component={() => {
-          return <ListsMenu lists={homeSuccessWithMore.listasPrincipales}/>
-        }}
+        component={ListsMenu}
         options={{
           tabBarIcon: ({color, size}) => (
               <Icon
@@ -58,8 +49,6 @@ const TabsNavigation = () => {
         }}
       />
     </Tab.Navigator>
-    
-        
   );
 };
 

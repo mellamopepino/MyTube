@@ -3,7 +3,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,15 +13,18 @@ import {
 import TabNavigation from './components/TabNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 
-const App: () => React$Node = () => {
+import { HomeProvider } from './context/HomeContext'
 
+const App: () => React$Node = () => {
 
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <NavigationContainer>
-          <TabNavigation />
+          <HomeProvider>
+            <TabNavigation/>
+          </HomeProvider>
         </NavigationContainer>
       </SafeAreaView>
     </>
