@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
-import { enableScreens } from 'react-native-screens';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import VideoListMenu from './VideoListMenu'
 import ListsMenu from './ListsMenu'
+import CustomHeader from '../Header'
 
-enableScreens();
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const Menu = () => {
+
+  const renderHeader = ({ scene, previous, navigation }) => {
+    const { options } = scene.descriptor;
+    const title =
+      options.headerTitle !== undefined
+        ? options.headerTitle
+        : options.title !== undefined
+        ? options.title
+        : scene.route.name;
+
+    return (
+      <CustomHeader
+        title={title}
+        buttonIcon={previous && "chevron-left"}
+        onPress={previous && navigation.goBack}
+      />
+    )
+  }
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      headerMode="screen"
+      screenOptions={{
+        header: renderHeader
+      }}
+    >
       <Stack.Screen
         name="Lists"
         component={ListsMenu}
