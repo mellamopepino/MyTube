@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
 } from 'react-native'
-import { Header, Icon } from 'react-native-elements';
+import { Header as RNHeader, Icon } from 'react-native-elements';
+import { appColor } from '../../styles'
 
 const CustomHeader = (props) => {
   const { title, buttonIcon, onPress} = props
@@ -19,7 +20,8 @@ const CustomHeader = (props) => {
   }
 
   return (
-    <Header
+    <RNHeader
+      backgroundColor={appColor}
       leftComponent={renderButton}
       centerComponent={{ text: title, style: styles.centerComponent }}
     />
@@ -29,6 +31,8 @@ const CustomHeader = (props) => {
 const styles = StyleSheet.create({
   centerComponent: {
     color: "#fff",
+    fontWeight: "bold",
+    fontSize: 20,
   }
 })
 

@@ -3,9 +3,10 @@ import {
   View,
 } from 'react-native';
 
-import VideoList from '../VideoList';
+import VideoList from '../generics/VideoList';
 
 import HomeContext from '../../context/HomeContext'
+import Header from '../generics/Header'
 
 const Home = () => {
   const [ refreshing, setRefreshing ] = useState(false)
@@ -19,6 +20,7 @@ const Home = () => {
 
   return (
     <View>
+      <Header title="MyTube" />
       <VideoList
         videos={videos}
         onEndReached={fetchNextPage}

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import VideoListMenu from './VideoListMenu'
 import ListsMenu from './ListsMenu'
-import CustomHeader from '../Header'
+import Header from '../generics/Header'
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ const Menu = () => {
         : scene.route.name;
 
     return (
-      <CustomHeader
+      <Header
         title={title}
         buttonIcon={previous && "chevron-left"}
         onPress={previous && navigation.goBack}
@@ -35,7 +35,7 @@ const Menu = () => {
       }}
     >
       <Stack.Screen
-        name="Lists"
+        name="Listas"
         component={ListsMenu}
       />
       <Stack.Screen

@@ -10,24 +10,19 @@ import {
   StatusBar,
 } from 'react-native';
 
-import TabNavigation from './components/TabNavigation';
-import { NavigationContainer } from '@react-navigation/native';
-
+import AppNavigation from './components/AppNavigation';
 import { HomeProvider } from './context/HomeContext'
-import Header from './components/Header'
+import { darkAppColor } from './styles'
 
 const App: () => React$Node = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor={darkAppColor}/>
       <SafeAreaView style={styles.container}>
-        <Header title="MyTube"/>
-        <NavigationContainer>
-          <HomeProvider>
-            <TabNavigation/>
-          </HomeProvider>
-        </NavigationContainer>
+        <HomeProvider>
+          <AppNavigation/>
+        </HomeProvider>
       </SafeAreaView>
     </>
   );

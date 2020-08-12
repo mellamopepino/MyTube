@@ -43,10 +43,8 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
     flexDirection: 'column',
-    marginVertical: 20,
   },
   videoText: {
-    flex: 3,
   },
   videoTitle: {
     fontWeight: 'bold',
