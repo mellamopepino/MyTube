@@ -1,6 +1,7 @@
 import React, { useContext, } from 'react';
 import {
   View,
+  Text,
   ScrollView,
   StyleSheet,
 } from 'react-native';
@@ -19,6 +20,16 @@ const ListsMenu = (props) => {
     })
   }
 
+  if(!lists) return null
+
+  if(lists.length === 0) {
+    return (
+      <View style={styles.noDataContainer}>
+        <Text style={styles.noDataText}>No hay listas :(</Text>
+      </View>
+    )
+  }
+
   return (
     <View>
       <ScrollView>
@@ -30,6 +41,16 @@ const ListsMenu = (props) => {
   )
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  noDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noDataText: {
+    color: 'grey',
+    fontSize: 20,
+  }
+});
 
 export default ListsMenu;

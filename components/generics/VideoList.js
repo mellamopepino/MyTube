@@ -2,6 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   FlatList,
+  View,
+  Text,
 } from 'react-native';
 
 import VideoElement from './VideoElement';
@@ -25,6 +27,16 @@ const VideoList = (props) => {
     return <Loading />
   }
 
+  if(!videos) return null
+
+  if(videos.length === 0) {
+    return (
+      <View style={styles.noDataContainer}>
+        <Text style={styles.noDataText}>No hay videos :(</Text>
+      </View>
+    )
+  }
+
   return (
     <FlatList
       data={videos}
@@ -38,6 +50,16 @@ const VideoList = (props) => {
   )
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  noDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noDataText: {
+    color: 'grey',
+    fontSize: 20,
+  }
+});
 
 export default VideoList;

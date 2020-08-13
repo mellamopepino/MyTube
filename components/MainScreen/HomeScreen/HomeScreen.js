@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import {
   View,
+  StyleSheet,
 } from 'react-native';
 
 import VideoList from '../../generics/VideoList';
@@ -12,7 +13,7 @@ const HomeScreen = () => {
   const { videos, fetchNextPage, refreshData, loading, refreshing } = useContext(MainContext)
 
   return (
-    <View>
+    <View style={styles.container}>
       <Header title="MyTube" />
       <VideoList
         videos={videos}
@@ -24,5 +25,11 @@ const HomeScreen = () => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default HomeScreen;
