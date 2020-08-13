@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const getMainData = async (offset) => {
-  const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=${offset}&limit=10`)
+  const res = await axios.get(`http://ap-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=${offset}&limit=10`)
+
+  await new Promise((r) => setTimeout(r, 2000))
 
   const mockItems = res.data.items.map((item) => {
     return {
@@ -14,7 +16,9 @@ const getMainData = async (offset) => {
 }
 
 const getListVideos = async (id, offset) => {
-  const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/lists/${id}?${offset}&limit=10`)
+  const res = await axios.get(`http://ap-editoriales.clarin.com/api/mobile/v2/oletv/lists/${id}?${offset}&limit=10`)
+
+  await new Promise((r) => setTimeout(r, 2000))
 
   const mockItems = res.data.items.map((item) => {
     return {

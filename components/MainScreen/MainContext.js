@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
+import Toast from 'react-native-simple-toast';
 import { getMainData } from './mainService'
 
 const MainContext = createContext();
@@ -6,19 +7,29 @@ const MainContext = createContext();
 export const MainProvider = (props) => {
   const [data, setData] = useState(null);
   const [offset, setOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getMainData(offset)
+      setLoading(true)
 
-      !data ?
-        setData(res) :
-        setData((data) => {
-          return {
-            ...data,
-            items: [...data.items, ...res.items]
-          }
-        })
+      try {
+        const res = await getMainData(offset)
+
+        !data ?
+          setData(res) :
+          setData((data) => {
+            return {
+              ...data,
+              items: [...data.items, ...res.items]
+            }
+          })
+      } catch(err) {
+        Toast.showWithGravity("Error al cargar", Toast.SHORT, Toast.CENTER)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchData()
@@ -31,7 +42,14 @@ export const MainProvider = (props) => {
   }
 
   const refreshData = async () => {
-    const res = await getMainData(0)
+    setRefreshing(true)
+    try {
+      const res = await getMainData(0)
+    } catch(err) {
+      Toast.showWithGravity("Error al cargar", Toast.SHORT, Toast.CENTER)
+    } finally {
+      setRefreshing(false)
+    }
     setData(res)
   }
 
@@ -42,6 +60,8 @@ export const MainProvider = (props) => {
         lists: data?.listasPrincipales,
         fetchNextPage,
         refreshData,
+        loading,
+        refreshing,
       }}
     >
       {props.children}

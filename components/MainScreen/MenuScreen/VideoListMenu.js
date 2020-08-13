@@ -11,19 +11,25 @@ const VideoListMenu = (props) => {
   const [ data, setData ] = useState(null)
   const [offset, setOffset] = useState(0);
   const [ refreshing, setRefreshing ] = useState(false)
+  const [ loading, setLoading ] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getListVideos(route.params.id, offset)
+      setLoading(true)
+      try {
+        const res = await getListVideos(route.params.id, offset)
 
-      !data ?
-        setData(res) :
-        setData((data) => {
-          return {
-            ...data,
-            items: [...data.items, ...res.items]
-          }
-        })
+        !data ?
+          setData(res) :
+          setData((data) => {
+            return {
+              ...data,
+              items: [...data.items, ...res.items]
+            }
+          })
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchData()
@@ -36,22 +42,22 @@ const VideoListMenu = (props) => {
   }
 
   const refreshData = async () => {
-    const res = await getListVideos(route.params.id, 0)
-    setData(res)
-  }
-
-  const handleRefresh = async () => {
     setRefreshing(true)
-    await refreshData()
-    setRefreshing(false)
+    try {
+      const res = await getListVideos(route.params.id, 0)
+    } finally {
+      setRefreshing(false)
+    }
+    setData(res)
   }
 
   return (
     <VideoList
       videos={data?.items}
       onEndReached={fetchNextPage}
-      onRefresh={handleRefresh}
+      onRefresh={refreshData}
       refreshing={refreshing}
+      loading={loading}
     />
   )
 }

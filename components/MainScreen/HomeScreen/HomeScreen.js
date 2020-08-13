@@ -9,14 +9,7 @@ import MainContext from '../MainContext'
 import Header from '../../generics/Header'
 
 const HomeScreen = () => {
-  const [ refreshing, setRefreshing ] = useState(false)
-  const { videos, fetchNextPage, refreshData } = useContext(MainContext)
-
-  const handleRefresh = async () => {
-    setRefreshing(true)
-    await refreshData()
-    setRefreshing(false)
-  }
+  const { videos, fetchNextPage, refreshData, loading, refreshing } = useContext(MainContext)
 
   return (
     <View>
@@ -24,8 +17,9 @@ const HomeScreen = () => {
       <VideoList
         videos={videos}
         onEndReached={fetchNextPage}
-        onRefresh={handleRefresh}
+        onRefresh={refreshData}
         refreshing={refreshing}
+        loading={loading}
       />
     </View>
   )

@@ -5,9 +5,10 @@ import {
 } from 'react-native';
 
 import VideoElement from './VideoElement';
+import Loading from '../generics/Loading';
 
 const VideoList = (props) => {
-  const { videos, onEndReached, onRefresh, refreshing } = props
+  const { videos, onEndReached, onRefresh, refreshing, loading } = props
 
   const renderVideo = (video) => {
     return (
@@ -18,6 +19,10 @@ const VideoList = (props) => {
         subtitle={video.subtitle}
       />
     )
+  }
+
+  if(!videos && loading) {
+    return <Loading />
   }
 
   return (
