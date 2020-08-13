@@ -3,11 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import VideoListMenu from './VideoListMenu'
 import ListsMenu from './ListsMenu'
-import Header from '../generics/Header'
+import Header from '../../generics/Header'
 
 const Stack = createStackNavigator();
 
-const Menu = () => {
+const MenuScreen = () => {
 
   const renderHeader = ({ scene, previous, navigation }) => {
     const { options } = scene.descriptor;
@@ -47,4 +47,4 @@ const Menu = () => {
   );
 }
 
-export default Menu;
+export default MenuScreen;

@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import HomeContext from '../../context/HomeContext'
+import HomeContext from '../../../context/HomeContext'
 import ListElement from './ListElement'
 
 const ListsMenu = (props) => {

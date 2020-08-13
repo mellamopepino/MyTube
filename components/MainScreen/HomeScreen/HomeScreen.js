@@ -3,12 +3,12 @@ import {
   View,
 } from 'react-native';
 
-import VideoList from '../generics/VideoList';
+import VideoList from '../../generics/VideoList';
 
-import HomeContext from '../../context/HomeContext'
-import Header from '../generics/Header'
+import HomeContext from '../../../context/HomeContext'
+import Header from '../../generics/Header'
 
-const Home = () => {
+const HomeScreen = () => {
   const [ refreshing, setRefreshing ] = useState(false)
   const { videos, fetchNextPage, refreshData } = useContext(HomeContext)
 
@@ -31,4 +31,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default HomeScreen;

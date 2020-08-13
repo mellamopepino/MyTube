@@ -11,6 +11,15 @@ export const HomeProvider = (props) => {
     const fetchData = async () => {
       const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=${offset}&limit=3`)
 
+      const mockItems = res.data.items.map((item) => {
+        return {
+          ...item,
+          thumbnail: "https://bucket3.glanacion.com/anexos/fotos/18/2389718.jpg"
+        }
+      })
+
+      res.data = { ...res.data, items: mockItems }
+
       !data ?
         setData(res.data) :
         setData((data) => {

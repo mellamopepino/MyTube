@@ -9,10 +9,16 @@ import {
   StyleSheet,
   StatusBar,
 } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-import AppNavigation from './components/AppNavigation';
 import { HomeProvider } from './context/HomeContext'
 import { darkAppColor } from './styles'
+
+import MainScreen from './components/MainScreen'
+import VideoScreen from './components/VideoScreen'
+
+const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
 
@@ -21,7 +27,22 @@ const App: () => React$Node = () => {
       <StatusBar backgroundColor={darkAppColor}/>
       <SafeAreaView style={styles.container}>
         <HomeProvider>
-          <AppNavigation/>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen
+                name="Main"
+                component={MainScreen}
+              />
+              <Stack.Screen
+                name="VideoScreen"
+                component={VideoScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
         </HomeProvider>
       </SafeAreaView>
     </>

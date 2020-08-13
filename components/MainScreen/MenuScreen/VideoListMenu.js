@@ -4,7 +4,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import VideoList from '../generics/VideoList'
+import VideoList from '../../generics/VideoList'
 
 const VideoListMenu = (props) => {
   const { route } = props

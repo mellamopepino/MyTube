@@ -1,28 +1,22 @@
 import React from 'react';
 import {
   StyleSheet,
-  View,
-  Text,
   FlatList,
-  Image,
 } from 'react-native';
 
-import VideoPlayer from './VideoPlayer';
+import VideoElement from './VideoElement';
 
 const VideoList = (props) => {
   const { videos, onEndReached, onRefresh, refreshing } = props
 
   const renderVideo = (video) => {
     return (
-      <View style={styles.videoContainer}>
-        <VideoPlayer
-          video={video.videoFiles.mp4}
-        />
-        <View styles={styles.videoText}>
-          <Text style={styles.videoTitle}>{video.title}</Text>
-          <Text style={styles.videoSubtitle}>{video.subtitle}</Text>
-        </View>
-      </View>
+      <VideoElement
+        video={video.videoFiles.mp4}
+        thumbnail={video.thumbnail}
+        title={video.title}
+        subtitle={video.subtitle}
+      />
     )
   }
 
@@ -39,18 +33,6 @@ const VideoList = (props) => {
   )
 }
 
-const styles = StyleSheet.create({
-  videoContainer: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  videoText: {
-  },
-  videoTitle: {
-    fontWeight: 'bold',
-  },
-  videoSubtitle: {
-  }
-});
+const styles = StyleSheet.create({});
 
 export default VideoList;
