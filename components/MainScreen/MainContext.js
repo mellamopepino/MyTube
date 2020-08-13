@@ -1,55 +1,53 @@
 import React, { useState, useEffect, createContext } from "react";
 import Toast from 'react-native-simple-toast';
 import { getMainData } from './mainService'
+import useFetch from '../generics/hooks/useFetch'
+import useRefresh from '../generics/hooks/useRefresh'
+
+const showErrorToast = () => {
+  Toast.showWithGravity("Error al cargar", Toast.SHORT, Toast.CENTER)
+}
 
 const MainContext = createContext();
 
 export const MainProvider = (props) => {
   const [data, setData] = useState(null);
-  const [offset, setOffset] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const [fetch, page, nextPage, loading] = useFetch(
+    getMainData,
+    showErrorToast
+  )
+  const [ refreshing, refresh ] = useRefresh(
+    () => getMainData(0),
+    showErrorToast
+  )
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
+      const res = await fetch()
+      if(!res) return
 
-      try {
-        const res = await getMainData(offset)
-
-        !data ?
-          setData(res) :
-          setData((data) => {
-            return {
-              ...data,
-              items: [...data.items, ...res.items]
-            }
-          })
-      } catch(err) {
-        Toast.showWithGravity("Error al cargar", Toast.SHORT, Toast.CENTER)
-      } finally {
-        setLoading(false)
-      }
+      !data ?
+        setData(res) :
+        setData((data) => {
+          return {
+            ...data,
+            items: [...data.items, ...res.items]
+          }
+        })
     }
 
     fetchData()
-  }, [offset])
+  }, [page])
 
   const fetchNextPage = async () => {
     if(data.moreItems) {
-      setOffset(offset+1)
+      nextPage()
     }
   }
 
   const refreshData = async () => {
-    setRefreshing(true)
-    try {
-      const res = await getMainData(0)
-    } catch(err) {
-      Toast.showWithGravity("Error al cargar", Toast.SHORT, Toast.CENTER)
-    } finally {
-      setRefreshing(false)
-    }
+    const res = await refresh()
+    if(!res) return
     setData(res)
   }
 

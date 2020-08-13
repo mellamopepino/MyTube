@@ -2,52 +2,55 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
 } from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import VideoList from '../../generics/VideoList'
 import { getListVideos } from '../mainService'
+import useFetch from '../../generics/hooks/useFetch'
+import useRefresh from '../../generics/hooks/useRefresh'
+
+const showErrorToast = () => {
+  Toast.showWithGravity("Error al cargar", Toast.SHORT, Toast.CENTER)
+}
 
 const VideoListMenu = (props) => {
   const { route } = props
   const [ data, setData ] = useState(null)
-  const [offset, setOffset] = useState(0);
-  const [ refreshing, setRefreshing ] = useState(false)
-  const [ loading, setLoading ] = useState(false)
+  const [fetch, page, nextPage, loading] = useFetch(
+    (offset) => getListVideos(route.params.id, offset),
+    showErrorToast
+  )
+  const [ refreshing, refresh ] = useRefresh(
+    () => getListVideos(route.params.id, 0),
+    showErrorToast
+  )
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
-      try {
-        const res = await getListVideos(route.params.id, offset)
+      const res = await fetch()
 
-        !data ?
-          setData(res) :
-          setData((data) => {
-            return {
-              ...data,
-              items: [...data.items, ...res.items]
-            }
-          })
-      } finally {
-        setLoading(false)
-      }
+      !data ?
+        setData(res) :
+        setData((data) => {
+          return {
+            ...data,
+            items: [...data.items, ...res.items]
+          }
+        })
     }
 
     fetchData()
-  }, [offset])
+  }, [page])
 
   const fetchNextPage = async () => {
     if(data.moreItems) {
-      setOffset(offset+1)
+      nextPage()
     }
   }
 
   const refreshData = async () => {
-    setRefreshing(true)
-    try {
-      const res = await getListVideos(route.params.id, 0)
-    } finally {
-      setRefreshing(false)
-    }
+    const res = await refresh()
+    if(!res) return
     setData(res)
   }
 
