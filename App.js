@@ -9,7 +9,7 @@ import {
   StyleSheet,
   StatusBar,
 } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { darkAppColor } from './styles'
@@ -29,6 +29,11 @@ const App: () => React$Node = () => {
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
+              gestureEnabled:true,
+              gestureResponseDistance: {
+                horizontal: 150,
+              },
+              ...TransitionPresets.SlideFromRightIOS,
             }}
           >
             <Stack.Screen

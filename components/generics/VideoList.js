@@ -41,7 +41,7 @@ const VideoList = (props) => {
     <FlatList
       data={videos}
       renderItem={({item}) => renderVideo(item)}
-      keyExtractor={(item, index) => index}
+      keyExtractor={(item, index) => index.toString()}
       horizontal={false}
       onEndReached={onEndReached}
       onRefresh={onRefresh}

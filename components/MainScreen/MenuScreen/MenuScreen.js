@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
 import VideoListMenu from './VideoListMenu'
 import ListsMenu from './ListsMenu'
@@ -31,7 +31,12 @@ const MenuScreen = () => {
     <Stack.Navigator
       headerMode="screen"
       screenOptions={{
-        header: renderHeader
+        header: renderHeader,
+        gestureEnabled:true,
+        gestureResponseDistance: {
+          horizontal: 150,
+        },
+        ...TransitionPresets.SlideFromRightIOS,
       }}
     >
       <Stack.Screen
