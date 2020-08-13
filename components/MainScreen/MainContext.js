@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from 'axios';
 
-const HomeContext = createContext();
+const MainContext = createContext();
 
-export const HomeProvider = (props) => {
+export const MainProvider = (props) => {
   const [data, setData] = useState(null);
   const [offset, setOffset] = useState(0);
 
@@ -46,7 +46,7 @@ export const HomeProvider = (props) => {
   }
 
   return (
-    <HomeContext.Provider
+    <MainContext.Provider
       value={{
         videos: data?.items,
         lists: data?.listasPrincipales,
@@ -55,9 +55,9 @@ export const HomeProvider = (props) => {
       }}
     >
       {props.children}
-    </HomeContext.Provider>
+    </MainContext.Provider>
   );
 }
 
-export default HomeContext;
+export default MainContext;
 

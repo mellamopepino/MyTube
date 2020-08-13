@@ -5,11 +5,11 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import HomeContext from '../../../context/HomeContext'
+import MainContext from '../MainContext'
 import ListElement from './ListElement'
 
 const ListsMenu = (props) => {
-  const { lists } = useContext(HomeContext)
+  const { lists } = useContext(MainContext)
   const { navigation } = props
 
   const handlePress = (id, name) => {

@@ -12,7 +12,6 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { HomeProvider } from './context/HomeContext'
 import { darkAppColor } from './styles'
 
 import MainScreen from './components/MainScreen'
@@ -26,24 +25,22 @@ const App: () => React$Node = () => {
     <>
       <StatusBar backgroundColor={darkAppColor}/>
       <SafeAreaView style={styles.container}>
-        <HomeProvider>
-          <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
-            >
-              <Stack.Screen
-                name="Main"
-                component={MainScreen}
-              />
-              <Stack.Screen
-                name="VideoScreen"
-                component={VideoScreen}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </HomeProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen
+              name="Main"
+              component={MainScreen}
+            />
+            <Stack.Screen
+              name="VideoScreen"
+              component={VideoScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       </SafeAreaView>
     </>
   );

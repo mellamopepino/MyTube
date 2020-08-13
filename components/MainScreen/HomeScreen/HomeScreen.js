@@ -5,12 +5,12 @@ import {
 
 import VideoList from '../../generics/VideoList';
 
-import HomeContext from '../../../context/HomeContext'
+import MainContext from '../MainContext'
 import Header from '../../generics/Header'
 
 const HomeScreen = () => {
   const [ refreshing, setRefreshing ] = useState(false)
-  const { videos, fetchNextPage, refreshData } = useContext(HomeContext)
+  const { videos, fetchNextPage, refreshData } = useContext(MainContext)
 
   const handleRefresh = async () => {
     setRefreshing(true)
