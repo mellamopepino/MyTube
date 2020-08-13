@@ -1,4 +1,5 @@
 import React from 'react';
+import { ListItem } from 'react-native-elements'
 import {
   View,
   Text,
@@ -15,11 +16,12 @@ const ListElement = (props) => {
   }
 
   return (
-    <TouchableHighlight onPress={handlePress} >
-      <View style={styles.listContainer}>
-        <Text style={styles.listTitle}>{list.name}</Text>
-      </View>
-    </TouchableHighlight>
+    <ListItem
+      title={list.name}
+      onPress={handlePress}
+      bottomDivider={true}
+      chevron={true}
+    />
   )
 }
 
