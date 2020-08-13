@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
 import {
   StyleSheet,
 } from 'react-native';
 
 import VideoList from '../../generics/VideoList'
+import { getListVideos } from '../mainService'
 
 const VideoListMenu = (props) => {
   const { route } = props
@@ -14,14 +14,14 @@ const VideoListMenu = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/lists/${route.params.id}?${offset}&limit=3`)
+      const res = await getListVideos(route.params.id, offset)
 
       !data ?
-        setData(res.data) :
+        setData(res) :
         setData((data) => {
           return {
             ...data,
-            items: [...data.items, ...res.data.items]
+            items: [...data.items, ...res.items]
           }
         })
     }
@@ -36,9 +36,8 @@ const VideoListMenu = (props) => {
   }
 
   const refreshData = async () => {
-    const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=0&limit=3`)
-
-    setData(res.data)
+    const res = await getListVideos(route.params.id, 0)
+    setData(res)
   }
 
   const handleRefresh = async () => {

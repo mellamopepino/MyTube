@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import axios from 'axios';
+import { getMainData } from './mainService'
 
 const MainContext = createContext();
 
@@ -9,23 +9,14 @@ export const MainProvider = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=${offset}&limit=3`)
-
-      const mockItems = res.data.items.map((item) => {
-        return {
-          ...item,
-          thumbnail: "https://bucket3.glanacion.com/anexos/fotos/18/2389718.jpg"
-        }
-      })
-
-      res.data = { ...res.data, items: mockItems }
+      const res = await getMainData(offset)
 
       !data ?
-        setData(res.data) :
+        setData(res) :
         setData((data) => {
           return {
             ...data,
-            items: [...data.items, ...res.data.items]
+            items: [...data.items, ...res.items]
           }
         })
     }
@@ -40,9 +31,8 @@ export const MainProvider = (props) => {
   }
 
   const refreshData = async () => {
-    const res = await axios.get(`http://api-editoriales.clarin.com/api/mobile/v2/oletv/home?offset=0&limit=3`)
-
-    setData(res.data)
+    const res = await getMainData(0)
+    setData(res)
   }
 
   return (
