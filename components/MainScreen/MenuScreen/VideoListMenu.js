@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Toast from 'react-native-simple-toast';
 
 import VideoList from '../../generics/VideoList';
@@ -14,7 +14,7 @@ const VideoListMenu = (props) => {
   const {route} = props;
   const [data, setData] = useState(null);
   const [fetch, page, nextPage, loading] = useFetch(
-    (offset) => getListVideos(route.params.id, offset),
+    getListVideosWithOffset,
     showErrorToast,
   );
   const [refreshing, refresh] = useRefresh(
@@ -22,9 +22,19 @@ const VideoListMenu = (props) => {
     showErrorToast,
   );
 
+  const getListVideosWithOffset = useCallback(
+    (offset) => {
+      getListVideos(route.params.id, offset);
+    },
+    [route.params.id],
+  );
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch();
+      if (!res) {
+        return;
+      }
 
       setData((currentData) => {
         return !currentData
@@ -37,7 +47,7 @@ const VideoListMenu = (props) => {
     };
 
     fetchData();
-  }, [page]);
+  }, [page, fetch]);
 
   const fetchNextPage = async () => {
     if (data.moreItems) {

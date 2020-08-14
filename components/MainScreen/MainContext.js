@@ -38,7 +38,6 @@ export const MainProvider = (props) => {
       });
     };
 
-    console.log('fetch!');
     fetchData();
   }, [page, fetch]);
 
