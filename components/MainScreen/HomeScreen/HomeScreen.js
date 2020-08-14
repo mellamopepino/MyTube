@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import React, {useContext} from 'react';
+import {View, StyleSheet} from 'react-native';
 
 import VideoList from '../../generics/VideoList';
 
-import MainContext from '../MainContext'
-import Header from '../../generics/Header'
+import MainContext from '../MainContext';
+import Header from '../../generics/Header';
 
 const HomeScreen = () => {
-  const { videos, fetchNextPage, refreshData, loading, refreshing } = useContext(MainContext)
+  const {videos, fetchNextPage, refreshData, loading, refreshing} = useContext(
+    MainContext,
+  );
 
   return (
     <View style={styles.container}>
@@ -23,8 +22,8 @@ const HomeScreen = () => {
         loading={loading}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -1,3 +1,3 @@
-import VideoScreen from './VideoScreen'
+import VideoScreen from './VideoScreen';
 
-export default VideoScreen
+export default VideoScreen;

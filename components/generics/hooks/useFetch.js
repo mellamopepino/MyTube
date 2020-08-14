@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import Toast from 'react-native-simple-toast';
+import {useState, useCallback} from 'react';
 
 const useFetch = (fetch, errorHandler) => {
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
-    if(!fetch) return
-
-    setLoading(true)
-    try {
-      const res = await fetch(offset)
-      return res
-    } catch(err) {
-      errorHandler && errorHandler(err)
-    } finally {
-      setLoading(false)
+  const fetchData = useCallback(async () => {
+    if (!fetch) {
+      return;
     }
-  }
 
-  const nextPage = async () => {
-    setOffset(offset+1)
-  }
+    setLoading(true);
+    try {
+      const res = await fetch(offset);
+      return res;
+    } catch (err) {
+      errorHandler && errorHandler(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [offset, fetch, errorHandler]);
 
-  return [
-    fetchData,
-    offset,
-    nextPage,
-    loading,
-  ]
-}
+  const nextPage = useCallback(async () => {
+    setOffset(offset + 1);
+  }, [offset]);
 
-export default useFetch
+  return [fetchData, offset, nextPage, loading];
+};
+
+export default useFetch;
